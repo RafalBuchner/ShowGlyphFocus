@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
 
 ###########################################################################################################
 #
@@ -17,18 +18,18 @@ from GlyphsApp.plugins import *
 
 class ShowGlyphFocus(ReporterPlugin):
 
+	@objc.python_method
 	def settings(self):
 		self.menuName = Glyphs.localize({
-			'en': u'Glyph Focus', 
-			'de': u'Fokus auf aktuelle Glyphe',
+			'en': 'Glyph Focus', 
+			'de': 'Fokus auf aktuelle Glyphe',
+			'fr': 'focus sur le glyphe actuel',
+			'es': 'concentración en el glifo actual',
 		})
-		
+	
+	@objc.python_method
 	def background(self, layer):
-		#rectSize = 10000/self.getScale()	
-		#grayRect  = NSRect( NSPoint(-rectSize,-rectSize), NSSize(rectSize*2+layer.width,2*rectSize) )
-		#NSBezierPath.fillRect_(grayRect)
-
-		NSColor.colorWithRed_green_blue_alpha_(0, 0, 0, 0.07).set()
+		NSColor.colorWithRed_green_blue_alpha_(0.5, 0.5, 0.5, 0.3).set()
 		grayRect = NSRect( 
 			NSPoint(0.0,layer.master.descender),
 			NSSize(layer.width,layer.master.ascender-layer.master.descender),
@@ -36,5 +37,4 @@ class ShowGlyphFocus(ReporterPlugin):
 		focusField = NSBezierPath.bezierPathWithRect_(grayRect)
 		focusField.appendBezierPath_( layer.completeBezierPath.bezierPathByReversingPath() )
 		focusField.fill()
-		
 		
