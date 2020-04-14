@@ -29,7 +29,7 @@ class ShowGlyphFocus(ReporterPlugin):
 	
 	@objc.python_method
 	def background(self, layer):
-		NSColor.colorWithRed_green_blue_alpha_(0.5, 0.5, 0.5, 0.3).set()
+		NSColor.colorWithRed_green_blue_alpha_(0.5, 0.5, 0.5, 0.2).set()
 		grayRect = NSRect( 
 			NSPoint(0.0,layer.master.descender),
 			NSSize(layer.width,layer.master.ascender-layer.master.descender),
