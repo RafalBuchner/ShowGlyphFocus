@@ -12,6 +12,20 @@ Installation of this filter will add the menu item *View > Show Glyph Focus* (de
 1. In *Window > Plugin Manager,* look for *Show Glyph Focus* and click *Install.*
 2. Restart Glyphs
 
+### Settings
+You are able to control color fo the focus rectangle.
+In order to do that you have to define the the color by running small script in macro window (Windows > Macro):
+
+```Python
+# for normal os mode
+Glyphs.defaults["com.mekkablue.ShowGlyphFocus.color"] = (1, 0, 0, 1)
+# for os in dark mode
+Glyphs.defaults["com.mekkablue.ShowGlyphFocus.colorDarkMode"] = (0, 0, 0.5, 0.4)
+```
+You can put any color values you want into the parentesis.
+Color is defined in RGBA (Red Green Blue Alpha/Opacity) format, where you set the component color values with float numbers between 0 and 1 (where 0 = 0% and 1 = 100%).
+
+
 ### Requirements
 
 The plugin needs Glyphs 2.5 or higher, running on OS X 10.9 or later.
