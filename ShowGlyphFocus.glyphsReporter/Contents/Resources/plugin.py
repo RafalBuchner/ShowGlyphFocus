@@ -32,6 +32,21 @@ class ShowGlyphFocus(ReporterPlugin):
 			'fr': 'focus sur le glyphe actuel',
 			'es': 'concentración en el glifo actual',
 		})
+		self.LoadPreferences()
+
+	@objc.python_method
+	def LoadPreferences( self ):
+		Glyphs.registerDefault( "com.mekkablue.ShowGlyphFocus.color", (0.5, 0.5, 0.5, 0.2) )
+		Glyphs.registerDefault( "com.mekkablue.ShowGlyphFocus.colorDarkMode", (0.9, 0.9, 0.9, 0.9) )
+
+		self.color = Glyphs.defaults["com.mekkablue.ShowGlyphFocus.color"]
+
+		darkModeIsTurnedOn = NSUserDefaults.standardUserDefaults().stringForKey_('AppleInterfaceStyle') == "Dark"	
+
+		if darkModeIsTurnedOn:
+			colorDarkMode = Glyphs.defaults["com.mekkablue.ShowGlyphFocus.colorDarkMode"]
+			self.color = colorDarkMode
+
 	
 	@objc.python_method
 	def transform(self, shiftX=0.0, shiftY=0.0, rotate=0.0, skew=0.0, scale=1.0):
@@ -54,12 +69,12 @@ class ShowGlyphFocus(ReporterPlugin):
 
 	@objc.python_method
 	def background(self, layer):
-		NSColor.colorWithRed_green_blue_alpha_(0.5, 0.5, 0.5, 0.2).set()
-		grayRect = NSRect( 
+		NSColor.colorWithRed_green_blue_alpha_(*self.color).set()
+		focusRect = NSRect( 
 			NSPoint(0.0,layer.master.descender),
 			NSSize(layer.width,layer.master.ascender-layer.master.descender),
 			)
-		focusField = NSBezierPath.bezierPathWithRect_(grayRect)
+		focusField = NSBezierPath.bezierPathWithRect_(focusRect)
 
 		italicAngle = layer.master.italicAngle
 		skewOriginHeight = layer.master.xHeight/2
